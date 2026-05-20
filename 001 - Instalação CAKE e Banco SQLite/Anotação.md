@@ -1,6 +1,6 @@
 # Instalação do CAKE
 
-- composer create-project --prefer-dist cakephp/app:~5.3 my_app_name
+- composer create-project --prefer-dist cakephp/app:~4.5 my_app_name
 
 # Conexão com banco de dados
 
