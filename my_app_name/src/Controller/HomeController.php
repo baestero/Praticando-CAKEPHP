@@ -8,7 +8,11 @@ class HomeController extends AppController
 {
   public function index()
   {
-    var_dump('index Home');
-    die();
+    $name = 'Leonardo';
+    $age = '27';
+
+    $this->set(compact('name', 'age'));
+
+    return $this->render('index', 'master');
   }
 }

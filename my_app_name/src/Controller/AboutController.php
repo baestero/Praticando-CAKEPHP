@@ -12,7 +12,6 @@ class AboutController extends AppController
 {
   public function index()
   {
-    var_dump('Index About');
-    die();
+    return $this->render('index', 'master');
   }
 }
