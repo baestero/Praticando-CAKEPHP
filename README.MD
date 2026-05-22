@@ -12,6 +12,12 @@ Praticando - CAKEPHP/
 │   └── Anotações.md
 ├── 003 - Seeds/
 │   └── Anotações.md
+├── 004 - Rotas/
+│   └── Anotações.md
+├── 005 - Controllers/
+│   └── Anotações.md
+├── 006 - Views/
+│   └── Anotações.md
 └── my_app_name/          # app CakePHP (prática dos tópicos acima)
 ```
 
@@ -20,6 +26,9 @@ Praticando - CAKEPHP/
 | `001 - Instalação CAKE e Banco SQLite` | Projeto novo + SQLite | [Anotação.md](001%20-%20Instalação%20CAKE%20e%20Banco%20SQLite/Anotação.md) |
 | `002 - Migrations` | Estrutura do banco (tabelas, FK, alterações) | [Anotações.md](002%20-%20Migrations/Anotações.md) |
 | `003 - Seeds` | Dados iniciais / fake com Faker | [Anotações.md](003%20-%20Seeds/Anotações.md) |
+| `004 - Rotas` | Rotas, métodos HTTP, parâmetros, scope | [Anotações.md](004%20-%20Rotas/Anotações.md) |
+| `005 - Controllers` | Bake, actions e parâmetros da URL | [Anotações.md](005%20-%20Controllers/Anotações.md) |
+| `006 - Views` | Templates, layout, CSS, elementos | [Anotações.md](006%20-%20Views/Anotações.md) |
 
 ---
 
@@ -166,16 +175,273 @@ for ($i = 1; $i <= 20; $i++) {
 
 ---
 
+## 004 — Rotas
+
+As rotas ficam em `config/routes.php`. Para subir o servidor em outra porta:
+
+```bash
+bin/cake server -p 8000
+```
+
+### Rota básica e nome
+
+```php
+$routes->connect('/', ['controller' => 'Home', 'action' => 'index'], [
+    '_name' => 'home.index',
+]);
+```
+
+Acesso a `/` → `HomeController::index()`.
+
+### Listar rotas
+
+```bash
+bin/cake routes
+```
+
+Para visualizar melhor, em `src/Application.php` é possível comentar o plugin DebugKit no bloco `debug`.
+
+### Métodos HTTP
+
+```php
+$routes->connect('/about', ['controller' => 'About', 'action' => 'index'], [
+    '_name' => 'about.index',
+])->setMethods(['GET', 'POST']);
+```
+
+### Parâmetros na URL (`pass` + regex)
+
+```php
+$routes->connect('/product/{id}/name/{name}', ['controller' => 'Product', 'action' => 'show'], [
+    '_name' => 'product.show',
+    'pass' => ['id', 'name'],
+    'id' => '[0-9]+',
+    'name' => '[a-z]+',
+])->setMethods(['GET']);
+```
+
+### Forma simplificada (`get`, `setPatterns`)
+
+```php
+$routes->get('/', ['controller' => 'Home', 'action' => 'index'], 'home.index');
+
+$routes->get(
+    '/product/{id}',
+    ['controller' => 'Product', 'action' => 'show'],
+    'product.show'
+)->setPatterns(['id' => '[0-9]+']);
+```
+
+Com `setPatterns`, os parâmetros são lidos no controller via `$this->request->getParam('id')` (ver `005`).
+
+### Rota coringa (`*`)
+
+URLs dinâmicas (slugs, categorias):
+
+```php
+$routes->connect('/clube/*', ['controller' => 'Clube', 'action' => 'index']);
+```
+
+No controller, os segmentos viram argumentos do método: `index($arg1, $arg2)`.
+
+### Scope (agrupar rotas)
+
+```php
+$routes->scope('/', function (RouteBuilder $routes) {
+    // rotas públicas: home, about, product...
+});
+
+$routes->scope('/admin', function (RouteBuilder $routes) {
+    // rotas admin: /admin, /admin/users, /admin/users/{id}
+});
+```
+
+**Anotações completas:** [004 - Rotas/Anotações.md](004%20-%20Rotas/Anotações.md)
+
+---
+
+## 005 — Controllers
+
+### Criar controller (sem actions padrão)
+
+```bash
+bin/cake bake controller --no-actions NomeDoController
+```
+
+Exemplo mínimo:
+
+```php
+class HomeController extends AppController
+{
+    public function index()
+    {
+        // lógica da action
+    }
+}
+```
+
+### Parâmetros com `pass` na rota
+
+Rota:
+
+```php
+$routes->connect('/product/{id}/name/{name}', ['controller' => 'Product', 'action' => 'show'], [
+    'pass' => ['id', 'name'],
+]);
+```
+
+Controller — argumentos na ordem dos placeholders:
+
+```php
+public function show($id, $name)
+{
+    // URL: /product/12/name/notebook → $id = 12, $name = notebook
+}
+```
+
+### Parâmetros com `get()` + `setPatterns`
+
+Rota:
+
+```php
+$routes->get('/product/{id}', ['controller' => 'Product', 'action' => 'show'], 'product.show')
+    ->setPatterns(['id' => '[0-9]+']);
+```
+
+Controller — usar a request:
+
+```php
+public function show()
+{
+    $id = $this->request->getParam('id');
+}
+```
+
+**Anotações completas:** [005 - Controllers/Anotações.md](005%20-%20Controllers/Anotações.md)
+
+---
+
+## 006 — Views
+
+Convention: `templates/{Controller}/{action}.php` — ex.: `templates/Home/index.php` para `HomeController::index()`.
+
+### Layout master
+
+Criar `templates/layout/master.php` com o conteúdo principal:
+
+```php
+<?= $this->fetch('content') ?>
+```
+
+Na view:
+
+```php
+<?php $this->layout = 'master'; ?>
+<h2>Home</h2>
+```
+
+### Bootstrap e container
+
+Incluir o CSS do Bootstrap no `master` e envolver o conteúdo em `<div class="container">`.
+
+### CSS por view
+
+No `master`, incluir os blocos (como no `default.php`):
+
+```php
+<?= $this->fetch('css') ?>
+<?= $this->fetch('script') ?>
+```
+
+Na view (`templates/Home/index.php`):
+
+```php
+<?php $this->layout = 'master'; ?>
+
+<?php $this->start('css'); ?>
+<link rel="stylesheet" href="css/my_home.css">
+<?php $this->end(); ?>
+
+<h2>Home</h2>
+```
+
+Repetir o padrão para outras telas (ex.: `About` + `webroot/css/about.css`).
+
+### Título dinâmico
+
+No layout:
+
+```php
+<title><?php echo h($this->fetch('title', 'valor padrão')); ?></title>
+```
+
+Na view:
+
+```php
+<?php $this->assign('title', 'My Homepage with assign'); ?>
+```
+
+### Sidebar (element)
+
+`templates/element/sidebar.php` com o HTML do menu.
+
+No layout:
+
+```php
+<?= $this->fetch('sidebar') ?>
+```
+
+Na view:
+
+```php
+<?php $this->start('sidebar'); ?>
+<?= $this->element('sidebar'); ?>
+<?php $this->end(); ?>
+```
+
+### `render()` no controller
+
+Em vez de `$this->layout` na view:
+
+```php
+return $this->render('index', 'master');
+```
+
+### Enviar dados para a view
+
+```php
+$name = 'Leonardo';
+$age = '27';
+
+$this->set(compact('name', 'age'));
+
+return $this->render('index', 'master');
+```
+
+Na view: `<?php echo $name, $age; ?>`.
+
+**Anotações completas:** [006 - Views/Anotações.md](006%20-%20Views/Anotações.md)
+
+---
+
 ## Ordem sugerida para reproduzir os estudos
 
 1. Instalar o projeto e configurar SQLite (`001`)
 2. Criar e migrar tabelas (`002`)
 3. Popular com seeds e Faker (`003`)
+4. Definir rotas, scopes e parâmetros (`004`)
+5. Criar controllers e capturar parâmetros (`005`)
+6. Montar views, layout, CSS e elementos (`006`)
 
-Na pasta `my_app_name/`, os arquivos gerados na prática ficam em:
+Na pasta `my_app_name/`, a prática correspondente fica em:
 
-- `config/Migrations/` — migrations (User, Post, coluna status, etc.)
-- `config/Seeds/` — seeds (User, Post, DatabaseSeed)
+| Tópico | Caminhos na app |
+|--------|-----------------|
+| Banco | `config/Migrations/`, `config/Seeds/`, `db/database.sqlite` |
+| Rotas | `config/routes.php` |
+| Controllers | `src/Controller/` (Home, About, Product, Clube, Admin, AdminUsers…) |
+| Views | `templates/`, `templates/layout/master.php`, `templates/element/sidebar.php` |
+| Assets | `webroot/css/` (style.css, my_home.css, about.css…) |
 
 ---
 
@@ -184,6 +450,10 @@ Na pasta `my_app_name/`, os arquivos gerados na prática ficam em:
 ```bash
 # Projeto
 composer create-project --prefer-dist cakephp/app:~4.5 my_app_name
+
+# Servidor e rotas
+bin/cake server -p 8000
+bin/cake routes
 
 # Migrations
 bin/cake bake migration Nome
@@ -194,10 +464,13 @@ bin/cake migrations rollback
 bin/cake bake seed NomeDaSeed
 bin/cake migrations seed
 bin/cake migrations seed --seed NomeDaSeed
+
+# Controllers
+bin/cake bake controller --no-actions NomeDoController
 ```
 
 ---
 
 ## Próximos tópicos
 
-Novas pastas numeradas (`004 - ...`) podem seguir o mesmo padrão: pasta com `Anotações.md` (ou `Anotação.md`) e implementação correspondente em `my_app_name/`.
+Novas pastas numeradas (`007 - ...`) podem seguir o mesmo padrão: pasta com `Anotações.md` (ou `Anotação.md`) e implementação correspondente em `my_app_name/`.
