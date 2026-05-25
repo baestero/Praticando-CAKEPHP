@@ -5,22 +5,26 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Datasource\ConnectionManager;
+use Cake\ORM\TableRegistry;
 
 class HomeController extends AppController
 {
   public function index()
   {
+    $tableUsers = TableRegistry::getTableLocator()->get('Users');
+    $users = $tableUsers->find()
+      ->limit(5)
+      ->where(['id >' => 10])
+      ->order('id desc');
 
-    $connection = ConnectionManager::get('default');
-
-    $prepare = $connection->prepare('SELECT * FROM users WHERE id > :id');
-    $prepare->bindValue('id', 5);
-    $prepare->execute();
-    $users = $prepare->fetchAll('obj');
+    $userEntity = $tableUsers->newEmptyEntity();
+    $userEntity->id = 22;
+    $userEntity->firstName = 'Eduardo';
+    $tableUsers->save($userEntity);
 
 
     $this->set(compact('users'));
 
-    return $this->render('index', 'master');
+    $this->render('index', 'master');
   }
 }
