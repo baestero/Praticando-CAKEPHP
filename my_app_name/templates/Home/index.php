@@ -9,4 +9,10 @@
 <?php $this->end('sidebar') ?>
 
 
-<h2>Home <?php echo $name, $age; ?> </h2>
+<h2>Home</h2>
+
+<ul>
+  <?php foreach ($users as $user): ?>
+    <li><?php echo  $user->id ?> <?php echo $user->firstName ?></li>
+  <?php endforeach; ?>
+</ul>
