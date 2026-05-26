@@ -11,19 +11,17 @@ class HomeController extends AppController
 {
   public function index()
   {
+    $tablePosts = TableRegistry::getTableLocator()->get('Posts');
+    $posts = $tablePosts->find()->contain(['Users']);
+
     $tableUsers = TableRegistry::getTableLocator()->get('Users');
-    $users = $tableUsers->find()
-      ->limit(5)
-      ->where(['id >' => 10])
-      ->order('id desc');
+    $users = $tableUsers->find()->contain(['Posts']);
 
-    $userEntity = $tableUsers->newEmptyEntity();
-    $userEntity->id = 22;
-    $userEntity->firstName = 'Eduardo';
-    $tableUsers->save($userEntity);
+    $tableRoles = TableRegistry::getTableLocator()->get('Roles');
+    $roles = $tableRoles->find()->contain(['Abilities']);
 
 
-    $this->set(compact('users'));
+    $this->set(compact('users', 'posts', 'roles'));
 
     $this->render('index', 'master');
   }
