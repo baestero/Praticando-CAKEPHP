@@ -11,17 +11,17 @@ class HomeController extends AppController
 {
   public function index()
   {
-    $tablePosts = TableRegistry::getTableLocator()->get('Posts');
-    $posts = $tablePosts->find()->contain(['Users']);
 
     $tableUsers = TableRegistry::getTableLocator()->get('Users');
-    $users = $tableUsers->find()->contain(['Posts']);
+    $query = $tableUsers->find()->contain(['Posts']);
 
-    $tableRoles = TableRegistry::getTableLocator()->get('Roles');
-    $roles = $tableRoles->find()->contain(['Abilities']);
+    $users = $this->paginate($query, [
+      'limit' => 15,
+    ]);
 
 
-    $this->set(compact('users', 'posts', 'roles'));
+
+    $this->set(compact('users'));
 
     $this->render('index', 'master');
   }

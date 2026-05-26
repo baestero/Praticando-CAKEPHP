@@ -35,4 +35,4 @@ comando para rodar a seed
 - cake migrations seed (roda todas as seeds)
   - Caso rodar todas as seeds mesmo ja tendo rodado as anteriores, elas rodaram novamente e duplicarão os dados então precisa-se rodar a seed especifica que foi adicionada, não tem o mesmo comportamento das migrations, que mesmo rodando todas, só adiciona a ultima.
 
-- cake migrations seed --seed nome_da_seed (roda todas as seeds)
+- cake migrations seed --seed nome_da_seed
