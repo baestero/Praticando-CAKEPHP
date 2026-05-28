@@ -35,21 +35,21 @@ Praticando - CAKEPHP/
 └── my_app_name/          # app CakePHP (prática dos tópicos acima)
 ```
 
-| Pasta | Tópico | Arquivo de estudo |
-|-------|--------|-------------------|
-| `001 - Instalação CAKE e Banco SQLite` | Projeto novo + SQLite | [Anotação.md](001%20-%20Instalação%20CAKE%20e%20Banco%20SQLite/Anotação.md) |
-| `002 - Migrations` | Estrutura do banco (tabelas, FK, alterações) | [Anotações.md](002%20-%20Migrations/Anotações.md) |
-| `003 - Seeds` | Dados iniciais / fake com Faker | [Anotações.md](003%20-%20Seeds/Anotações.md) |
-| `004 - Rotas` | Rotas, métodos HTTP, parâmetros, scope | [Anotações.md](004%20-%20Rotas/Anotações.md) |
-| `005 - Controllers` | Bake, actions e parâmetros da URL | [Anotações.md](005%20-%20Controllers/Anotações.md) |
-| `006 - Views` | Templates, layout, CSS, elementos | [Anotações.md](006%20-%20Views/Anotações.md) |
-| `007 - Crud com classe de conexão` | Connection, query builder, transactions | [Anotações.md](007%20-%20Crud%20com%20classe%20de%20conexão/Anotações.md) |
-| `008 - Model e Entity` | Bake model, ORM, insert/update com entity | [Anotações.md](008%20-%20Model%20e%20Entity/Anotações.md) |
-| `009 - Relacionamentos` | BelongsTo, HasMany, BelongsToMany | [Anotações.md](009%20-%20Relacionamentos/Anotações.md) |
-| `010 - Paginação` | `paginate()`, helper Paginator, ordenação | [Anotações.md](010%20-%20Paginação/Anotações.md) |
-| `011 - Helpers` | Url, Number, Html, Form (e Paginator) | [Anotações.md](011%20-%20Helpers/Anotações.md) |
-| `012 - Cadastrando User` | Form helper, `patchEntity`, Flash | [Anotações.md](012%20-%20Cadastrando%20User/Anotações.md) |
-| `013 - Validando Formulário` | `validationDefault`, regras na Table | [Anotações.md](013%20-%20Validando%20Formulário/Anotações.md) |
+| Pasta                                  | Tópico                                       | Arquivo de estudo                                                           |
+| -------------------------------------- | -------------------------------------------- | --------------------------------------------------------------------------- |
+| `001 - Instalação CAKE e Banco SQLite` | Projeto novo + SQLite                        | [Anotação.md](001%20-%20Instalação%20CAKE%20e%20Banco%20SQLite/Anotação.md) |
+| `002 - Migrations`                     | Estrutura do banco (tabelas, FK, alterações) | [Anotações.md](002%20-%20Migrations/Anotações.md)                           |
+| `003 - Seeds`                          | Dados iniciais / fake com Faker              | [Anotações.md](003%20-%20Seeds/Anotações.md)                                |
+| `004 - Rotas`                          | Rotas, métodos HTTP, parâmetros, scope       | [Anotações.md](004%20-%20Rotas/Anotações.md)                                |
+| `005 - Controllers`                    | Bake, actions e parâmetros da URL            | [Anotações.md](005%20-%20Controllers/Anotações.md)                          |
+| `006 - Views`                          | Templates, layout, CSS, elementos            | [Anotações.md](006%20-%20Views/Anotações.md)                                |
+| `007 - Crud com classe de conexão`     | Connection, query builder, transactions      | [Anotações.md](007%20-%20Crud%20com%20classe%20de%20conexão/Anotações.md)   |
+| `008 - Model e Entity`                 | Bake model, ORM, insert/update com entity    | [Anotações.md](008%20-%20Model%20e%20Entity/Anotações.md)                   |
+| `009 - Relacionamentos`                | BelongsTo, HasMany, BelongsToMany            | [Anotações.md](009%20-%20Relacionamentos/Anotações.md)                      |
+| `010 - Paginação`                      | `paginate()`, helper Paginator, ordenação    | [Anotações.md](010%20-%20Paginação/Anotações.md)                            |
+| `011 - Helpers`                        | Url, Number, Html, Form (e Paginator)        | [Anotações.md](011%20-%20Helpers/Anotações.md)                              |
+| `012 - Cadastrando User`               | Form helper, `patchEntity`, Flash            | [Anotações.md](012%20-%20Cadastrando%20User/Anotações.md)                   |
+| `013 - Validando Formulário`           | `validationDefault`, regras na Table         | [Anotações.md](013%20-%20Validando%20Formulário/Anotações.md)               |
 
 ---
 
@@ -185,10 +185,10 @@ for ($i = 1; $i <= 20; $i++) {
 
 ### Executar seeds
 
-| Comando | Comportamento |
-|---------|----------------|
-| `bin/cake migrations seed` | Roda **todas** as seeds |
-| `bin/cake migrations seed --seed NomeDaSeed` | Roda apenas uma seed |
+| Comando                                      | Comportamento           |
+| -------------------------------------------- | ----------------------- |
+| `bin/cake migrations seed`                   | Roda **todas** as seeds |
+| `bin/cake migrations seed --seed NomeDaSeed` | Roda apenas uma seed    |
 
 **Importante:** rodar todas as seeds de novo **duplica** os dados (diferente das migrations, que só aplicam o que ainda não rodou). Depois da primeira carga, prefira a seed específica.
 
@@ -665,12 +665,12 @@ Ordenação: `$this->Paginator->sort('firstName', 'Nome')`. Elementos reutilizá
 
 Por padrão o Cake carrega helpers comuns nas views. O **Paginator** não vem carregado — registre em `src/View/AppView.php` (ver `010`).
 
-| Helper | Uso típico |
-|--------|------------|
-| **Url** | Links e URLs nomeadas |
-| **Number** | Formatação numérica |
-| **Html** | Tags HTML, links, imagens |
-| **Form** | Formulários (`create`, `control`, `button`) |
+| Helper     | Uso típico                                  |
+| ---------- | ------------------------------------------- |
+| **Url**    | Links e URLs nomeadas                       |
+| **Number** | Formatação numérica                         |
+| **Html**   | Tags HTML, links, imagens                   |
+| **Form**   | Formulários (`create`, `control`, `button`) |
 
 Classes em `vendor/cakephp/cakephp/src/View/Helper/`.
 
@@ -719,49 +719,6 @@ No layout `master`: `<?= $this->Flash->render() ?>` e script do Bootstrap. Mensa
 
 **Anotações completas:** [012 - Cadastrando User/Anotações.md](012%20-%20Cadastrando%20User/Anotações.md)
 
----
-
-## 013 — Validando formulário
-
-Regras em `src/Model/Table/UsersTable.php`, método `validationDefault()` — aplicadas ao `patchEntity()` / `save()`:
-
-```php
-public function validationDefault(Validator $validator): Validator
-{
-    $validator
-        ->scalar('firstName')
-        ->maxLength('firstName', 100)
-        ->requirePresence('firstName', 'create')
-        ->notEmptyString('firstName', 'Necessário preencher o campo');
-
-    $validator
-        ->email('email')
-        ->requirePresence('email', 'create')
-        ->notEmptyString('email', 'Necessário preencher o campo')
-        ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
-
-    // demais campos: lastName, password, etc.
-
-    return $validator;
-}
-```
-
-Unicidade de e-mail também em `buildRules()`:
-
-```php
-public function buildRules(RulesChecker $rules): RulesChecker
-{
-    $rules->add($rules->isUnique(['email']), ['errorField' => 'email']);
-    return $rules;
-}
-```
-
-Erros aparecem automaticamente nos campos do `Form->control()` quando o save falha.
-
-**Anotações completas:** [013 - Validando Formulário/Anotações.md](013%20-%20Validando%20Formulário/Anotações.md)
-
----
-
 ## Ordem sugerida para reproduzir os estudos
 
 1. Instalar o projeto e configurar SQLite (`001`)
@@ -776,20 +733,19 @@ Erros aparecem automaticamente nos campos do `Form->control()` quando o save fal
 10. Paginação e templates do Paginator (`010`)
 11. Conhecer os helpers (Url, Html, Form…) (`011`)
 12. Formulário de cadastro com Flash (`012`)
-13. Validação na Table e regras de integridade (`013`)
 
 Na pasta `my_app_name/`, a prática correspondente fica em:
 
-| Tópico | Caminhos na app |
-|--------|-----------------|
-| Banco | `config/Migrations/`, `config/Seeds/`, `db/database.sqlite` |
-| Rotas | `config/routes.php` |
-| Controllers | `src/Controller/` (Home, About, Product, Clube, Admin…) |
-| Models | `src/Model/Table/`, `src/Model/Entity/` |
-| Views | `templates/`, `templates/layout/master.php`, `templates/element/` |
-| Paginação | `config/paginator.php`, `templates/element/paginator/` |
+| Tópico       | Caminhos na app                                                               |
+| ------------ | ----------------------------------------------------------------------------- |
+| Banco        | `config/Migrations/`, `config/Seeds/`, `db/database.sqlite`                   |
+| Rotas        | `config/routes.php`                                                           |
+| Controllers  | `src/Controller/` (Home, About, Product, Clube, Admin…)                       |
+| Models       | `src/Model/Table/`, `src/Model/Entity/`                                       |
+| Views        | `templates/`, `templates/layout/master.php`, `templates/element/`             |
+| Paginação    | `config/paginator.php`, `templates/element/paginator/`                        |
 | Form / Flash | `templates/Home/add.php`, `templates/element/flash/`, `AppController` (Flash) |
-| Assets | `webroot/css/` |
+| Assets       | `webroot/css/`                                                                |
 
 ---
 
