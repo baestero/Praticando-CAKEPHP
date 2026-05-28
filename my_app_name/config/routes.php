@@ -37,6 +37,10 @@ return function (RouteBuilder $routes): void {
             '_name' => 'home.index'
         ])->setMethods(['GET']);
 
+        $routes->connect('/add', ['controller' => 'Home', 'action' => 'add'], [
+            '_name' => 'home.add'
+        ])->setMethods(['GET', 'POST']);
+
         $routes->connect('/about', ['controller' => 'About', 'action' => 'index'], [
             '_name' => 'about.index'
         ])->setMethods(['GET', 'POST']);

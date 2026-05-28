@@ -37,7 +37,7 @@ pegamos o código:
 
 e inserimos no nosso templates/layout/master.php
 
-Apartir disso, todos templater vão ser carregados do master.php
+Apartir disso, todos templates vão ser carregados do master.php
 
 ```html
 <!DOCTYPE html>
