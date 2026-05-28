@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -60,25 +61,25 @@ class UsersTable extends Table
             ->scalar('firstName')
             ->maxLength('firstName', 100)
             ->requirePresence('firstName', 'create')
-            ->notEmptyString('firstName');
+            ->notEmptyString('firstName', 'Necessário preencher o campo');
 
         $validator
             ->scalar('lastName')
             ->maxLength('lastName', 100)
             ->requirePresence('lastName', 'create')
-            ->notEmptyString('lastName');
+            ->notEmptyString('lastName', 'Necessário preencher o campo');
 
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->notEmptyString('email')
+            ->notEmptyString('email', 'Necessário preencher o campo')
             ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('password')
             ->maxLength('password', 100)
             ->requirePresence('password', 'create')
-            ->notEmptyString('password');
+            ->notEmptyString('password', 'Necessário preencher o campo');
 
         $validator
             ->dateTime('created_at')
